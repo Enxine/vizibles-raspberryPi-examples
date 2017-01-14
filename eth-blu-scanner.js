@@ -1,6 +1,6 @@
 var fs = require('fs');
 var browser = require('iotdb-arp');
-var vizibles = require('vizibles-nodejs-library');
+var vizibles = require('vizibles');
 var cloudConnectionOpened = false;
 var scanInterval = null;
 
