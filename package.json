@@ -1,0 +1,26 @@
+{
+  "name": "vizibles-raspberrypi3-examples",
+  "version": "1.0.0",
+  "description": "Examples to use a Raspberry Pi 3 as vizibles client",
+  "main": "eth-blu-scanner.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Enxine/vizibles-raspberryPi3-examples.git"
+  },
+  "keywords": [
+    "vizibles",
+    "raspberry",
+    "iot",
+    "internet of things",
+    "things"
+  ],
+  "author": "Enxine <info@vizibles.com> (https://vizibles.com)",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/Enxine/vizibles-raspberryPi3-examples/issues"
+  },
+  "homepage": "https://github.com/Enxine/vizibles-raspberryPi3-examples#readme"
+}
