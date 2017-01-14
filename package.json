@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/Enxine/vizibles-raspberryPi3-examples/issues"
   },
-  "homepage": "https://github.com/Enxine/vizibles-raspberryPi3-examples#readme"
+  "homepage": "https://github.com/Enxine/vizibles-raspberryPi3-examples#readme",
+  "dependencies": {
+    "vizibles": "0.0.1"
+  }
 }
