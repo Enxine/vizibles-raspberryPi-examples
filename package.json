@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/Enxine/vizibles-raspberryPi3-examples#readme",
   "dependencies": {
+    "bluetooth-serial-port": "^2.1.1",
     "iotdb-arp": "0.0.6",
     "vizibles": "0.0.1"
   }
