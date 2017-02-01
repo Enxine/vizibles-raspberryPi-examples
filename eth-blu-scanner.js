@@ -19,11 +19,14 @@ var bluCurrentDevices = [];
 var ethFoundDevices = [];
 var ethCurrentDevices = [];
 
+var ethNotFoundDevices = {};
+
 function clearAllConnectionStatus() {
     bluFoundDevices.splice(0);
     bluCurrentDevices.splice(0);
     ethFoundDevices.splice(0);
     ethCurrentDevices.splice(0);
+    ethNotFoundDevices = {};
     
     var prop = {};
     for (var property in knownDevices) {
@@ -156,13 +159,20 @@ function onConnected() {
 	
 	scanInterval = setInterval(function() {
 	    console.log('\n\nSearching....');
-	    
-	    // remove devices not found in last search
-	    var notFoundDevices = ethCurrentDevices.filter(function(device) { return ethFoundDevices.indexOf(device) == -1});
+	    // remove devices not found in last 3 searchs
+	    var notFoundDevices = ethCurrentDevices.filter(function(device) { return ethFoundDevices.indexOf(device) == -1 });
 	    notFoundDevices.forEach(function(item) {
-		updateDeviceStatus(item, 0);
+		if (ethNotFoundDevices.hasOwnProperty(item)) {
+		    ethNotFoundDevices[item]++;
+		    if (ethNotFoundDevices[item] == 3) {
+			ethCurrentDevices.splice(ethCurrentDevices.indexOf(item), 1);
+			updateDeviceStatus(item, 0);
+			delete ethNotFoundDevices[item];
+		    }
+		} else {
+		    ethNotFoundDevices[item] = 0;
+		}
 	    });
-	    ethCurrentDevices = ethCurrentDevices.filter(function(device) { return ethFoundDevices.indexOf(device) != -1});
 	    
 	    scanEth();
 
