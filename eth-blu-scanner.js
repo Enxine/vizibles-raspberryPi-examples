@@ -1,24 +1,54 @@
+// devDependency (only for debugging)
+//var logtimestamp = require('log-timestamp');
+
 var fs = require('fs');
 var browser = require('iotdb-arp');
 var vizibles = require('vizibles');
 var cloudConnectionOpened = false;
 var scanInterval = null;
 
+var ONLY_KNOWN_DEVICES = true;
+
 var knownDevices = {
 };
 
 var bluFoundDevices = [];
 var bluCurrentDevices = [];
+
+// list of 'normalized' (':' changed for '-') MACs 
 var ethFoundDevices = [];
 var ethCurrentDevices = [];
 
-function updateDeviceStatus(mac, status) {
-    var deviceName = mac;
-    if ((knownDevices[mac]) && (knownDevices[mac].name)) deviceName = knownDevices[mac].name;
+function clearAllConnectionStatus() {
+    bluFoundDevices.splice(0);
+    bluCurrentDevices.splice(0);
+    ethFoundDevices.splice(0);
+    ethCurrentDevices.splice(0);
+    
     var prop = {};
-    prop[deviceName] = status;
+    for (var property in knownDevices) {
+	if (knownDevices.hasOwnProperty(property) && knownDevices[property].name) {
+	    prop[knownDevices[property].name] = 0;
+	}
+    }
     console.log('Update: ' + JSON.stringify(prop));
     vizibles.update(prop);
+}
+
+function updateDeviceStatus(mac, status) {
+    var deviceName = mac;
+    var isKnown = false;
+    if ((knownDevices[mac]) && (knownDevices[mac].name)) {
+	isKnown = true;
+	deviceName = knownDevices[mac].name;
+    }
+    var prop = {};
+    prop[deviceName] = status;
+
+    if (isKnown || !ONLY_KNOWN_DEVICES) {
+	console.log('Update: ' + JSON.stringify(prop));
+	vizibles.update(prop);
+    }
 }
 
 function scanEth() {
@@ -67,6 +97,8 @@ function onConnected() {
     console.log('Connected to Vizibles!');
     if (!cloudConnectionOpened) {
         cloudConnectionOpened = true;
+
+	clearAllConnectionStatus();
 
 	var btSerial = new (require('bluetooth-serial-port')).BluetoothSerialPort();
 
