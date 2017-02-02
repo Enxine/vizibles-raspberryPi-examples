@@ -159,12 +159,12 @@ function onConnected() {
 	
 	scanInterval = setInterval(function() {
 	    console.log('\n\nSearching....');
-	    // remove devices not found in last 3 searchs
+	    // remove devices not found in last 5 searches
 	    var notFoundDevices = ethCurrentDevices.filter(function(device) { return ethFoundDevices.indexOf(device) == -1 });
 	    notFoundDevices.forEach(function(item) {
 		if (ethNotFoundDevices.hasOwnProperty(item)) {
 		    ethNotFoundDevices[item]++;
-		    if (ethNotFoundDevices[item] == 3) {
+		    if (ethNotFoundDevices[item] == 5) {
 			ethCurrentDevices.splice(ethCurrentDevices.indexOf(item), 1);
 			updateDeviceStatus(item, 0);
 			delete ethNotFoundDevices[item];
