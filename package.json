@@ -28,7 +28,7 @@
     "vizibles": "0.0.1"
   },
   "optionalDependencies": {
-    "bluetooth-serial-port": "^2.1.1",
+    "bluetooth-serial-port": "^2.1.1"
   },
   "devDependencies": {
     "log-timestamp": "^0.1.2"
