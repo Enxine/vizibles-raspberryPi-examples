@@ -30,6 +30,8 @@ var ONLY_KNOWN_DEVICES = true;
 // Frequency of searching loop execution
 var SEARCH_FREQ = 20000;
 
+var FAILED_SEARCHES_TO_REMOVE = 6;
+
 var knownDevices = {
     /*
       This object defines a list with your known devices. Each property name
@@ -161,12 +163,12 @@ function onConnected() {
 			bluCurrentDevices[i].delCounter = 0; 
 		    } else {
 			bluCurrentDevices[i].delCounter++;
-			if (bluCurrentDevices[i].delCounter >= 3) {
+			if (bluCurrentDevices[i].delCounter >= FAILED_SEARCHES_TO_REMOVE) {
 			    updateDeviceStatus(bluCurrentDevices[i].address.replace(/\W/g, '-'), 0);
 			}
 		    }
 		}
-		bluCurrentDevices = bluCurrentDevices.filter(function(device) { return (device.delCounter < 3) });
+		bluCurrentDevices = bluCurrentDevices.filter(function(device) { return (device.delCounter < FAILED_SEARCHES_TO_REMOVE) });
 	    });
 	}
 	
